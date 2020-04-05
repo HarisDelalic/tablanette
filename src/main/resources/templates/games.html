@@ -27,12 +27,18 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Played At</th>
+                    <th scope="col">Players</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="game : ${games}">
                     <td th:text="${game.getName()}">...</td>
                     <td th:text="${game.getCreatedAt()}">...</td>
+                    <!--/*@thymesVar id="getName" type=""*/-->
+                    <td th:text="${T(ba.delalich.tablanette.util.CollectionMapper).getNames(game.getPlayers().stream())}"></td>
+<!--                    <div th:each="player : ${game.getPlayers()}" th:remove="tag">-->
+<!--                        <td th:text="${player.getUser().getName()}">...</td>-->
+<!--                    </div>-->
                 </tr>
                 </tbody>
             </table>

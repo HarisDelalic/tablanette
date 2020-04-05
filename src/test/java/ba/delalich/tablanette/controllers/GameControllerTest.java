@@ -1,6 +1,8 @@
 package ba.delalich.tablanette.controllers;
 
 import ba.delalich.tablanette.models.Game;
+import ba.delalich.tablanette.models.Player;
+import ba.delalich.tablanette.models.User;
 import ba.delalich.tablanette.services.GameService;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,9 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,8 +43,12 @@ public class GameControllerTest {
 
     @Test
     public void testRetrieveAllGames() throws Exception {
+        Game game = new Game(0, "game1", new Date());
+        List<User> users = getUsers();
+        Set<Player> players = getPlayers(game, users);
+
         List<Game> existingGames = Stream.of(
-                new Game(1, "game1", new Date()),
+                new Game(1, "game1", new Date(), players),
                 new Game(2, "game2", new Date()))
                 .collect(Collectors.toList());
 
@@ -61,6 +65,9 @@ public class GameControllerTest {
     @Test
     public void testCreateNewGame() throws Exception {
         Game game = new Game(0, "to_be_created", new Date());
+        List<User> users = getUsers();
+        Set<Player> players = getPlayers(game, users);
+        game.setPlayers(players);
 
         when(gameService.save(any(Game.class))).thenReturn(game);
 
@@ -73,6 +80,18 @@ public class GameControllerTest {
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is3xxRedirection())
                 .andReturn();
+    }
+
+    private List<User> getUsers() {
+        User user1 = new User(1, "user_name1", "admin", new Date(), new Date());
+        User user2 = new User(1, "user_name2", "admin", new Date(), new Date());
+        return new ArrayList<User>(Arrays.asList(user1, user2));
+    }
+
+    private Set<Player> getPlayers(Game game, List<User> users) {
+        Player player1 = new Player(0, 0, game, users.get(0));
+        Player player2 = new Player(0, 1, game, users.get(1));
+        return new HashSet<>(Arrays.asList(player1, player2));
     }
 
 }
