@@ -12,7 +12,14 @@
 <div class="container" style="margin-top: 30px;">
     <div class="row">
         <div class="col col-sm-4">
-            <button class="btn btn-success">Create New Game</button>
+            <form th:object="${game}" method="post" action="/games">
+                <div class="div form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" th:field="*{name}" id="name"/>
+                </div>
+<!--                Dynamically add players-->
+                <input class="btn btn-success form-control" type="submit" value="Create New Game" />
+            </form>
         </div>
         <div class="col col-sm-8">
             <table class="table table-striped">

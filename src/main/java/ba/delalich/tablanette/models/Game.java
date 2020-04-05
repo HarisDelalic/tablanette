@@ -14,7 +14,6 @@ import java.util.Date;
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     @Column(name="game_id")
     private int gameId;
 
