@@ -12,10 +12,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    public static final String DELA = "dela";
+    public static final String MAJI = "maji";
+    public static final String AMA = "ama";
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int userId;
+    private Integer userId;
 
     private String name;
 

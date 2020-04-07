@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -13,31 +12,18 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int playerId;
+    private Integer playerId;
 
-    @NotBlank
-    private int index;
+    private Integer indexx;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id", nullable = false)
-    private Game game;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player )) return false;
-        return playerId != 0 && playerId == (((Player) o).getPlayerId());
-    }
-
-    @Override
-    public int hashCode() {
-        return 31;
+    public Player(int indexx, User user) {
+        this.indexx = indexx;
+        this.user = user;
     }
 }

@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Tablanette</title>
 </head>
 <body>
 
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col col-sm-4">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Played At</th>
+                    <th scope="col">Players</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:object="${game}">
+                    <td th:text="*{name}">...</td>
+                    <td th:text="*{createdAt}">...</td>
+                    <td th:text="${T(ba.delalich.tablanette.util.CollectionMapper).getNames(game.getPlayers().stream())}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col col-sm-8">
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,9 +15,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class Game {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private int gameId;
+    private Integer gameId;
 
     private String name;
 
@@ -24,12 +25,11 @@ public class Game {
     private Date createdAt;
 
     @OneToMany(
-            mappedBy = "game",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
-
     )
-    private Set<Player> players;
+    @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false)
+    private Set<Player> players = new HashSet<Player>();
 
     public Game(int gameId, String name, Date createdAt) {
         this.gameId = gameId;
