@@ -20,10 +20,12 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final UserService userService;
+    private final BullService bullService;
 
-    public GameService(GameRepository gameRepository, UserService userService) {
+    public GameService(GameRepository gameRepository, UserService userService, BullService bullService) {
         this.gameRepository = gameRepository;
         this.userService = userService;
+        this.bullService = bullService;
     }
 
     public List<Game> findAll() {
@@ -37,14 +39,6 @@ public class GameService {
         return getGameOrThrowException(game);
     }
 
-    private Game getGameOrThrowException(Optional<Game> game) {
-        if (game.isPresent()) {
-            return game.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game Not Found");
-        }
-    }
-
     public Game save(Game game) {
         return this.gameRepository.save(game);
     }
@@ -53,6 +47,14 @@ public class GameService {
         List<String> defaultUserNames = getDefaultUsernames();
         List<User> defaultUsers = getDefaultUsers(defaultUserNames);
         setGameDefaultPlayers(game, defaultUsers);
+    }
+
+    private Game getGameOrThrowException(Optional<Game> game) {
+        if (game.isPresent()) {
+            return game.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game Not Found");
+        }
     }
 
     private List<String> getDefaultUsernames() {
@@ -69,5 +71,9 @@ public class GameService {
                 .mapToObj(i -> new Player(i, defaultUsers.get(i)))
                 .collect(Collectors.toSet());
         game.setPlayers(defaultPlayers);
+    }
+
+    public void createBull(Game game) {
+        this.bullService.createBull(game);
     }
 }

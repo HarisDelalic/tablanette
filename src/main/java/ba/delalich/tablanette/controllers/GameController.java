@@ -28,7 +28,7 @@ public class GameController {
     @PostMapping("/games")
     public String createGame(@ModelAttribute Game game) {
         this.gameService.addDefaultPlayers(game);
-//        game.setPlayers(this.gameService.defaultPlayers());
+        this.gameService.createBull(game);
         this.gameService.save(game);
 
         return "redirect:/games/" + game.getGameId();

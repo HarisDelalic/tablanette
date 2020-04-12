@@ -1,5 +1,6 @@
 package ba.delalich.tablanette.controllers;
 
+import ba.delalich.tablanette.models.Bull;
 import ba.delalich.tablanette.models.Game;
 import ba.delalich.tablanette.models.Player;
 import ba.delalich.tablanette.models.User;
@@ -47,7 +48,7 @@ public class GameControllerTest {
         Set<Player> players = getPlayers(users);
 
         List<Game> existingGames = Stream.of(
-                new Game(1, "game1", new Date(), players),
+                new Game(1, "game1", new Date(), players, new HashSet<Bull>()),
                 new Game(2, "game2", new Date()))
                 .collect(Collectors.toList());
 

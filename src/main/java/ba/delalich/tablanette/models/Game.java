@@ -31,6 +31,12 @@ public class Game {
     @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false)
     private Set<Player> players = new HashSet<Player>();
 
+    @OneToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false)
+    private Set<Bull> bulls = new HashSet<>();
+
     public Game(int gameId, String name, Date createdAt) {
         this.gameId = gameId;
         this.name = name;
